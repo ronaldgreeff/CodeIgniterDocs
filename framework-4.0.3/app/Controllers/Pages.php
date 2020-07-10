@@ -22,7 +22,6 @@ class Pages extends Controller
         return view('welcome_message');
     }
 
-
     public function view($page = 'home')
     {
         // check if page exists using PHPs native is_file()
