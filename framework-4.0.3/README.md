@@ -89,7 +89,7 @@ Using MySql with MySQL Workbench (as used in the docs)
 * Download latest MySQL Community Version (doing this locally). It includes MySQL Workbench
 * Go through Installation Wizrd
 * Open MySQL workbench
-* Configure the database via `.env` file
+* Configure the database via `.env` file - for variables that need to be changed only (Database.php has defaults - just uncomment where changed)
 
 
 ## CodeIgniter
