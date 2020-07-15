@@ -7,7 +7,7 @@ $routes = Services::routes();
 // can override as needed.
 if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
 {
-	require SYSTEMPATH . 'Config/Routes.php';
+    require SYSTEMPATH . 'Config/Routes.php';
 }
 
 /**
@@ -30,7 +30,25 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+// Each rule is a regular expression (left-side) mapped to a
+// controller and method name separated by slashes (right-side)
+// $routes->get('regex_exp', 'controller::method');
+
 $routes->get('/', 'Home::index');
+// ^ This directive says that any incoming request without any content specified 
+// ("/") should be handled by the index() method inside the Home controller.
+
+$routes->get('(:any)', 'Pages::view/$1');
+// ^ Here $routes (array) matches *any* request using wildcard string (:any)
+// and passes the parameter to the view() method of Pages
+// http://localhost:8080/home
+//  ->  Pages.view('home')
+// http://localhost:8080/about
+//  ->  Pages.view('about')
+
+// disable auto-routing by setting $routes->setAutoRoute(false); in the
+// Routes.php file. This ensures that only routes you define can be accessed.
 
 /**
  * --------------------------------------------------------------------
@@ -47,5 +65,5 @@ $routes->get('/', 'Home::index');
  */
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
 {
-	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }

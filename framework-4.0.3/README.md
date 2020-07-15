@@ -84,6 +84,14 @@ $ httpd -t
 * In web root, create a file `index.php` and add `<?php phpinfo(); ?>` to it and go to `http://localhost/`
 
 
+## SQL
+Using MySql with MySQL Workbench (as used in the docs)
+* Download latest MySQL Community Version (doing this locally). It includes MySQL Workbench
+* Go through Installation Wizrd
+* Open MySQL workbench
+* Configure the database via `.env` file
+
+
 ## CodeIgniter
 * Change DocumentRoot to /public in Apache's `conf/httpd.conf`
 * Download latest version @ https://github.com/CodeIgniter4/framework/releases/latest
@@ -91,6 +99,8 @@ $ httpd -t
 * Copy `env` to `.env` and set `CI_ENVIRONMENT = development`
 * use `php spark serve` to launch local development server (PHP's built-in web server with CodeIgniter routing)
 * *follow rest of docs...*
+
+
 
 ### CodeIgniter Notes
 
