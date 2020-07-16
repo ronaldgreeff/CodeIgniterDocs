@@ -91,24 +91,6 @@ Using MySql with MySQL Workbench (as used in the docs)
 * Open MySQL workbench
 * Configure the database via `.env` file - for variables that need to be changed only (Database.php has defaults - just uncomment where changed)
 
-## Environment
-* Always best to set env up first
-* Install `composer` (from project root) to make installing packages easy (creates `vendor` folder which contains `autoload.php`):
-
-*CodeIgniter `index.php` in `public` folder, soo need to traverse back*
-`//  include composer autoloader
-require __DIR__ . '\..\vendor\\autoload.php';
-//
-//  tell DotEnv to load the .env file
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
-$dotenv->load();
-//
-// confirm using eg.
-echo getenv('database.default.DBDriver');
-`
-
-* Install `phpdotenv` to use `.env` file (using composer)
-
 
 ## CodeIgniter
 * Change DocumentRoot to /public in Apache's `conf/httpd.conf`
