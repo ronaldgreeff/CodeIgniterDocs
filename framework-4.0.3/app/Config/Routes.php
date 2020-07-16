@@ -39,7 +39,8 @@ $routes->get('/', 'Home::index');
 // ^ This directive says that any incoming request without any content specified 
 // ("/") should be handled by the index() method inside the Home controller.
 
-$routes->get('(:any)', 'Pages::view/$1');
+// ** Moved to bottom in Part 2 else executed first **
+// $routes->get('(:any)', 'Pages::view/$1');
 // ^ Here $routes (array) matches *any* request using wildcard string (:any)
 // and passes the parameter to the view() method of Pages
 // http://localhost:8080/home
@@ -47,8 +48,14 @@ $routes->get('(:any)', 'Pages::view/$1');
 // http://localhost:8080/about
 //  ->  Pages.view('about')
 
-// disable auto-routing by setting $routes->setAutoRoute(false); in the
-// Routes.php file. This ensures that only routes you define can be accessed.
+// ** You can disable auto-routing by setting $routes->setAutoRoute(false); in
+// the Routes.php file. This ensures that only routes you define can be accessed.
+
+// PART 2
+$routes->get('news/(:segment)', 'News::view/$1');
+$routes->get('news', 'News::index');
+
+$routes->get('(:any)', 'Pages::view/$1');
 
 /**
  * --------------------------------------------------------------------

@@ -91,6 +91,24 @@ Using MySql with MySQL Workbench (as used in the docs)
 * Open MySQL workbench
 * Configure the database via `.env` file - for variables that need to be changed only (Database.php has defaults - just uncomment where changed)
 
+## Environment
+* Always best to set env up first
+* Install `composer` (from project root) to make installing packages easy (creates `vendor` folder which contains `autoload.php`):
+
+*CodeIgniter `index.php` in `public` folder, soo need to traverse back*
+`//  include composer autoloader
+require __DIR__ . '\..\vendor\\autoload.php';
+//
+//  tell DotEnv to load the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
+$dotenv->load();
+//
+// confirm using eg.
+echo getenv('database.default.DBDriver');
+`
+
+* Install `phpdotenv` to use `.env` file (using composer)
+
 
 ## CodeIgniter
 * Change DocumentRoot to /public in Apache's `conf/httpd.conf`
@@ -98,7 +116,19 @@ Using MySql with MySQL Workbench (as used in the docs)
 * Unzip as project root
 * Copy `env` to `.env` and set `CI_ENVIRONMENT = development`
 * use `php spark serve` to launch local development server (PHP's built-in web server with CodeIgniter routing)
-* *follow rest of docs...*
+* *follow rest of docs:*
+*   Write class referencing static pages
+    - `app/Controllers/SomeController.php`
+    - extends `Controller`
+*   Clean up URI by adding custom routing rules
+    - `app/Config/Routes.php`
+*   Config. DB settings
+    - `app/Config/Database.php`
+    - Can specify failover(s, as array,) in case main connection fails
+    - You can create connection groups (dev, prod, test)
+*   Add dynamic content using a database
+    - `app/Models/SomeModel.php`
+    - extends `Model`
 
 
 

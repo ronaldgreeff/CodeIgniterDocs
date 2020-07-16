@@ -1,6 +1,9 @@
 <?php namespace App\Controllers;
 
 use CodeIgniter\Controller;
+// Controller provides a couple of helper methods,
+// and makes sure you have access to Request and Response objects
+// as well as the Logger class for saving info. to disk
 
 // Controllers map to URLs
 // http://example.com/news/latest/10
