@@ -103,8 +103,11 @@ Using MySql with MySQL Workbench (as used in the docs)
 
 TODO:
 research:
+arrow functions
 =>
 ->
+resolution operator
+::
 
 
 *   Write class referencing static pages
