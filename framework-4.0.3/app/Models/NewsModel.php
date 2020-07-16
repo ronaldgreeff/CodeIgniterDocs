@@ -29,6 +29,12 @@ class NewsModel extends Model
 {
     protected $table = 'news';
 
+    // save() method used in Controller News.create() determines whether the information should be inserted or (if row exists) updated, based on the presence of a primary key. If none given, will just insert into "news" table.
+
+    // By Default insert and update methods in the model won't save any data - need to know what fields are safe to be updated. Updatable fields provided as list using $allowedFields property:
+    protected $allowedFields = ['title', 'slug', 'body'];
+    // We leave out id since it's an auto-incrementing field in db
+
     // Now need a method to get our posts from our database
     // using Query Builder (database abstraction layer)
 

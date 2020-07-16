@@ -44,4 +44,39 @@ class News extends Controller
         echo view('news/view', $data); // app/Views/view.php
         echo view('templates/footer', $data);
     }
+
+    // create a news item
+    public function create()
+    {
+        // load NewsModel
+        $model = new NewsModel();
+
+        // check if request is POST + validate $_POST fields
+        // using Controller-provided helper function
+        if ($this->request->getMethod() === 'post' && $this->validate([
+                'title' => 'required|min_length[3]|max_length[255]',
+                'body'  => 'required'
+            ]))
+        {
+            // if form submitted (ie. POST) *and* passed validation, call the model
+            $model->save([
+                'title' => $this->request->getPost('title'),
+                // url_title (provided by the URL Helper) sluggifies a string
+                'slug'  => url_title($this->request->getPost('title'), '-', TRUE),
+                'body'  => $this->request->getPost('body'),
+            ]);
+
+            // then load a view to display a success message
+            echo view('news/success');
+
+        }
+        else
+        // if validation unsuccesful (or not POST), display the form
+        {
+            echo view('templates/header', ['title' => 'Create a news item']);
+            echo view('news/create');
+            echo view('templates/footer');
+        }
+    }
+
 }

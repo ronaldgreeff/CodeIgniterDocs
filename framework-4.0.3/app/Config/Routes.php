@@ -51,6 +51,11 @@ $routes->get('/', 'Home::index');
 // ** You can disable auto-routing by setting $routes->setAutoRoute(false); in
 // the Routes.php file. This ensures that only routes you define can be accessed.
 
+// PART 3
+// We want CI to see `create` as a method, not a news item's slug
+$routes->match(['get', 'post'], 'news/create', 'News::create');
+
+
 // PART 2
 $routes->get('news/(:segment)', 'News::view/$1');
 $routes->get('news', 'News::index');

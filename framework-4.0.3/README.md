@@ -111,6 +111,8 @@ Using MySql with MySQL Workbench (as used in the docs)
 *   Add dynamic content using a database
     - `app/Models/SomeModel.php`
     - extends `Model`
+    - populate with seed data
+*   Add a form
 
 
 
