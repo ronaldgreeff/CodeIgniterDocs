@@ -98,12 +98,97 @@ Using MySql with MySQL Workbench (as used in the docs)
 * Unzip as project root
 * Copy `env` to `.env` and set `CI_ENVIRONMENT = development`
 * use `php spark serve` to launch local development server (PHP's built-in web server with CodeIgniter routing)
-* *follow rest of docs:*
+
+### Controllers, Routing and Models
+
+TODO:
+research:
+=>
+->
+
+
 *   Write class referencing static pages
     - `app/Controllers/SomeController.php`
     - extends `Controller`
+
+    `\\ Static Pages
+    class Pages extends Controller
+    {
+        public function index() { return view('welcome'); }
+        public function view($page='home')
+        {
+            if (! APPPATH.'Views/pages/'.$page.'php')
+            { throw new CodeIgniter\Exceptions\PageNotFoundException($page); }
+            // else
+            $data['key'] = value;
+            echo view('templates/header', $data);
+            echo view('pages/'.$page, $data);
+            echo view('templates/footer', $data);
+        }
+    }
+    \\ Dynamic News
+    class News extends Controller
+    {
+        public function index()
+        {
+            $model = new NewsModel();
+            $data = [
+                'news' => $model ->getNews(),
+                'title' => 'News archive',
+            ];
+            echo view('templates/header', $data);
+            echo view('news/overview', $data);
+            echo view('templates/footer', $data);
+        }
+        public function view($slug=null)
+        {
+            $model = new NewsModel();
+            $data['news'] = $model->getNews($slug);
+            if (empty($data['news']))
+            { throw new \CodeIgniter\Exceptions\PageNotFoundException('Cannot find the news item: '. $slug); }
+            // else
+            $data['title'] = $data['news']['title'];
+            echo view('templates/header', $data);
+            echo view('news/view', $data); // app/Views/view.php
+            echo view('templates/footer', $data);
+        }
+        public function create()
+        {
+            $model = new NewsModel();
+            if ($this->request->getMethod() === 'post' && $this->validate([
+                'title' => 'requires|min_length[3'|max_length[255]',
+                'body' +> 'required'
+            ]))
+            {
+                $model->save([
+                    'title' => $this->request->getPost('title'),
+                    'slug'  => url_title($this->request->getPost('title'), '-', TRUE),
+                    'body'  => $this->request->getPost('body'),
+                ]);
+                echo view('news/success');
+            }
+            else
+            {
+                echo view('templates/header', ['title' => 'Create a news item']);
+                echo view('news/create');
+                echo view('templates/footer');
+            }
+        }
+    }`
+
 *   Clean up URI by adding custom routing rules
     - `app/Config/Routes.php`
+
+    `// No Content Specified
+    $routes->get('/', 'Home::index');
+    // Contact form
+    $routes->match(['get', 'post'], 'news/create', 'News::create');
+    // News Pages
+    $routes->get('news/(:segment)', 'News::view/$1');
+    $routes->get('news', 'News::index');
+    // Static Pages
+    $routes->get('(:any)', 'Pages::view/$1');`
+
 *   Config. DB settings
     - `app/Config/Database.php`
     - Can specify failover(s, as array,) in case main connection fails
@@ -111,6 +196,23 @@ Using MySql with MySQL Workbench (as used in the docs)
 *   Add dynamic content using a database
     - `app/Models/SomeModel.php`
     - extends `Model`
+    
+    `class NewsModel extends Model
+    {
+        protected $table = 'news';
+        protected $allowedFields = ['title', 'slug', 'body'];
+        public function getNews($slug=false)
+        {
+            if ($slug === false)
+            {
+                return $this->findAll();
+            }
+            return $this->asArray()
+                        ->where(['slug'=>$slug])
+                        ->first();
+        }
+    }`
+
     - populate with seed data
 *   Add a form
 
